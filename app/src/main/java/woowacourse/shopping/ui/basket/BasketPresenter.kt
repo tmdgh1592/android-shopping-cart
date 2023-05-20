@@ -77,6 +77,7 @@ class BasketPresenter(
         view.updateTotalPrice(basketRepository.getTotalPrice())
         _totalCheckSize.value = basketRepository.getCheckedProductCount()
         _pageCheckSize.value = basket.getCheckedSize(currentPage)
+        view.updateBasket(basket.takeItemsUpToPage(currentPage).map { it.toUi() })
     }
 
     fun unselectProduct(product: UiProduct) {
@@ -85,13 +86,11 @@ class BasketPresenter(
         view.updateTotalPrice(basketRepository.getTotalPrice())
         _totalCheckSize.value = basketRepository.getCheckedProductCount()
         _pageCheckSize.value = basket.getCheckedSize(currentPage)
+        view.updateBasket(basket.takeItemsUpToPage(currentPage).map { it.toUi() })
     }
 
-    fun changeAllCheckState(isAllCheck: Boolean) {
-        if (_pageCheckSize.value!! > 0 && _pageCheckSize.value != basket.takeItemsUpToPage(currentPage).size) {
-            return
-        }
-        basket = if (isAllCheck) basket.selectAll() else basket.unselectAll()
+    fun toggleAllCheckState() {
+        basket = if (isAllChecked.value == true) basket.unselectAll() else basket.selectAll()
         basketRepository.update(basket.takeBasketUpToPage(currentPage))
 
         _totalCheckSize.value = basketRepository.getCheckedProductCount()
