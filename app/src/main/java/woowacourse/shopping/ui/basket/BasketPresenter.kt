@@ -95,7 +95,7 @@ class BasketPresenter(
 
         _totalCheckSize.value = basketRepository.getCheckedProductCount()
         _pageCheckSize.value = basket.getCheckedSize(currentPage)
-        view.updateBasket(basket.takeItemsUpToPage(currentPage).map { it.toUi() })
+        view.updateAllCheckedState(basket.takeItemsUpToPage(currentPage).map { it.toUi() })
         view.updateTotalPrice(basketRepository.getTotalPrice())
     }
 

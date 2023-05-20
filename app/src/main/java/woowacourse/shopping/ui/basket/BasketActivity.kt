@@ -38,6 +38,12 @@ class BasketActivity : AppCompatActivity(), View {
         binding.adapter?.submitList(basketProducts)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    override fun updateAllCheckedState(basketProducts: List<UiBasketProduct>) {
+        binding.adapter?.submitList(basketProducts)
+        binding.adapter?.notifyDataSetChanged()
+    }
+
     override fun updateNavigatorEnabled(previousEnabled: Boolean, nextEnabled: Boolean) {
         binding.previousButton.isEnabled = previousEnabled
         binding.nextButton.isEnabled = nextEnabled
